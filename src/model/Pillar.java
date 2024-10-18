@@ -22,6 +22,14 @@ public class Pillar {
      */
     public boolean registerProject(Project newProject) {
 
+		for (int i=0; i<projects.length;i++){
+			if (projects[i]==null){
+				projects[i] = newProject;
+				return true;
+			}
+		}
+
+
         return false;
     }
 
@@ -33,10 +41,33 @@ public class Pillar {
      */
     public String getProjectList() {
 
-        String list = "";
+        String list = "Lista de proyectos: ";
+        boolean valido = false;
+
+        if (projects == null){
+            list = "No hay proyectos registrados";
+        }else{
+            for (int i = 0; i < projects.length; i++) {
+                if (projects[i] != null) {
+                    list += " "+projects[i].toString() + "\n";
+                    valido = true;
+                }
+            }
+
+            if (valido == false) {
+                list = "No hay proyectos registrados";
+            }
+        }
 
         return list;
     }
+
+    @Override
+    public String toString() {
+        return "Pillar nombre= " + this.name + " " + getProjectList() ;
+
+    }
+
 
 
 }

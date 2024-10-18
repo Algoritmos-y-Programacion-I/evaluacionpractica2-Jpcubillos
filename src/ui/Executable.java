@@ -12,6 +12,7 @@ public class Executable {
 
         control = new Controller();
         reader = new Scanner(System.in);
+        control.precargaPilares();
 
     }
 
@@ -64,15 +65,72 @@ public class Executable {
      * en un Pillar en el sistema
     */
     public void registerProject() {
+    reader.nextLine();
+    boolean salir = false;
+    int type_final=0;
+    
+    while(!salir){
+    System.out.println("Digite el tipo de pilar (1) Biodiversidad / (2) Agua / (3) Tratamiento de basuras / (4) Ambiente");
+    int pillarType = reader.nextInt(); 
+    
+    if ((pillarType == 1) || (pillarType == 2) || (pillarType == 3) || (pillarType == 4)){
+        salir=true;
+        type_final=pillarType;
+        break;   
+        
+    }else{
+    System.out.println("Error, verifique el pilar.");
+    }
+    }
 
-        reader.nextLine();
+    reader.nextLine();
+    
+    System.out.println("Digite el id del pilar");
+    String idPilar = reader.nextLine();
+
+    System.out.println("Digite el nombre del proyecto");
+    String name = reader.nextLine();
+
+    System.out.println("Digite la descripcion del proyecto");
+    String description = reader.nextLine(); 
+
+    System.out.println("El proyecto esta activo? : (true / false)");
+    boolean status = reader.nextBoolean(); 
+
+    boolean resultado = control.registerProjectInPillar(type_final, idPilar, name, description, status);
+
+    if(resultado){
+        System.out.println("Proyecto registrado exitosamente");
+    }else{
+        System.out.println("Error memoria llena!");
+    }
 
     }
 
+    
     /** 
      * Descripcion: Muestra al usuario los Projects registrados en un Pillar 
     */
     public void showProjectsByPillar() {
+    
+    boolean salir = false;
+    int type_final=0;
+    
+    while(!salir){
+    System.out.println("Digite el tipo de pilar que desea consultar (1) Biodiversidad / (2) Agua / (3) Tratamiento de basuras / (4) Ambiente");
+    int pillarType = reader.nextInt(); 
+    
+    if ((pillarType == 1) || (pillarType == 2) || (pillarType == 3) || (pillarType == 4)){
+        salir=true;
+        type_final=pillarType;
+        break;   
+        
+    }else{
+    System.out.println("Error, verifique el pilar.");
+    }
+    }
+
+    System.out.println(control.queryProjectsByPillar(type_final));
 
     }
 
